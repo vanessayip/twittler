@@ -1,0 +1,43 @@
+button {
+  color: white;
+  background-color: SkyBlue;
+  margin: 10px;
+}
+
+button:hover {
+  color: SkyBlue;
+  background-color: white;
+}
+
+#refresh:visited {
+  color: purple;
+}
+
+h1 {
+  font-family: 'Gotham';
+  color: LightSkyBlue;
+}
+
+.feed {
+
+}
+
+.tweet {
+  padding: 5px;
+}
+
+.username {
+  font-family: Helvetica;
+  font-weight: bold;
+  color: black;
+}
+
+.timestamp {
+  color: grey;
+  font-style: italic;
+
+}
+
+.message {
+  color: #1DA1F2;
+}
