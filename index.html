@@ -4,31 +4,91 @@
     <link rel="stylesheet" type="text/css" href="application.css">
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <title>Twittler</title>
   </head>
   <body>
-
+    <header>
+      <h1 class = "title">Twittler</h1>
+    </header>
+    <nav>
     <button type="button" id="Refresh">Refresh Tweets</button>
+    </nav>
+    <div class = "feed">
+      <!--<div class = "tweet">
+        <div class = "username"></div>
+        <div class = "timestamp"></div>
+        <div class = "message"></div>
+       </div> -->
+
+    </div>
     <script>
+      function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+     }
 
       $(document).ready(function(){
         //var $body = $('body');
         //$body.html('<button type="button" id="Refresh">Refresh i rock Tweets</button>');
 
-        var printTweet = function($tweet, tweet){
+        /*var printTweet = function($tweet, tweet){
           $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
           $tweet.appendTo($('body'));
+        }
+        var addUsername = function($tweetUsername, tweet){
+          $tweetUsername.text('@' + tweet.user);
+          // $tweetUsername.appendTo($('.tweet'));
+        }
+
+        var printTimestamp = function($tweetTimestamp, tweet){
+          $tweetTimestamp.text('~' + tweet.created_at);
+          $tweetTimestamp.insertAfter($('.username'));
+        }
+
+        var printMessage = function($tweetMessage, tweet){
+          $tweetMessage.text(tweet.message);
+          $tweetMessage.insertAfter($('.timestamp'));
         }
 
         var printAllTweets = function (length){
           while(length >= 0){
           var tweet = streams.home[length];
-          var $tweet = $('<div></div>');
+          var $tweet = $('<div class = "tweet"></div>');
+          var $tweetUsername = $('<div class = "username"></div>');
+          var $tweetTimestamp = $('<div class = "timestamp"></div>');
           printTweet($tweet, tweet);
+          length -= 1;
+          }
+        }*/
+
+        var printAllTweets = function (length){
+          while(length >= 0){
+          var tweet = streams.home[length];
+          var $tweet = $('<div class = "tweet"></div>');
+          var $tweetUsername = $('<div class = "username"></div>');
+          var $tweetTimestamp = $('<div class = "timestamp"></div>');
+          var $tweetMessage = $('<div class = "message"></div>');
+
+          $tweet.appendTo($('.feed'));
+          $tweetUsername.text('@' + tweet.user);
+          $tweetUsername.appendTo($tweet);
+          $tweetTimestamp.text('~' + tweet.created_at);
+          $tweetTimestamp.appendTo($tweet);
+          $tweetMessage.text(tweet.message);
+          $tweetMessage.appendTo($tweet);
+
           length -= 1;
           }
         }
 
         var index = streams.home.length - 1;
+        var user = getParameterByName('user');
+        //debugger
         printAllTweets(index);
         
         
