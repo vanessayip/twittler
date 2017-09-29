@@ -31,23 +31,36 @@
     <script>
 
       $(document).ready(function(){
-
-        $('#write-tweet').submit(function(event){
-          //var message = $('input:first').val();
-          // alert("hi!");
-          // alert(event.currentTarget.children[0].value);
-          window.visitor = 'caspurr';        
-          // visitor = 'tweetingVisitor';
-          // debugger
-          writeTweet(this.firstElementChild.value);
+        /* - show the user new tweets (either auto as they're created or w/ a button)
+        - add button in html for refresh
+        - if streams.home.length !== index
+        - then assign streams.home.length - 1 to a temp var
+        - find the diff length of temp and index and assign to diff
+        - run _.last (temp[array], diff), write out the text and appendTo($body)
+        */
+        $('#Refresh').on('click', function(){
+          if (streams.home.length-1 > totalNumTweets){
           printAllTweets(null);
+          }
+        });
+
+        //submit button
+        $('#write-tweet').submit(function(event){
           event.preventDefault();
+
+          var message = $(this).children('input').first().val();
+          window.visitor = 'tweetingVisitor';        
+           
+          writeTweet(message);
+          $(this).children('input').first().val('');
+          printAllTweets(null);
+          
         });
        
         var printAllTweets = function (user){
+          
           var tweetStream;
-          //debugger
-
+          
           //if user is null, show all tweets
           if (user === null){
             tweetStream = streams.home;
@@ -56,10 +69,9 @@
             tweetStream = streams.users[user];
           }
 
-
           $('.feed').empty();
 
-          tweetStream.forEach(function(tweet){
+          tweetStream.slice().reverse().forEach(function(tweet){
             var $tweet = $('<div class = "tweet"></div>');
             var $tweetUsername = $('<span class = "username"></span>');
             var $tweetTimestamp = $('<span class = "timestamp"></span>');
@@ -79,31 +91,9 @@
           });
         }
 
-        // Shows all tweets
+        // Shows all tweets upon load
         var totalNumTweets = streams.home.length - 1;
         printAllTweets(null);
-        
-
-        /* - show the user new tweets (either auto as they're created or w/ a button)
-        - add button in html for refresh
-        - if streams.home.length !== index
-        - then assign streams.home.length - 1 to a temp var
-        - find the diff length of temp and index and assign to diff
-        - run _.last (temp[array], diff), write out the text and appendTo($body)
-        */
-        $('#Refresh').on('click', function(){
-          if (streams.home.length-1 > totalNumTweets){
-          //var tempLength = streams.home.length-1;
-          //var diffLength = tempLength - totalNumTweets;
-
-          //var diffArr = streams.home.slice(streams.home.length-diffLength, streams.home.length);
-          printAllTweets(null);
-          }
-          //$(this).css("font-style", "italic");
-          //console.log('diffLength: ' + diffLength);
-        });
-
-
 
       });
 
