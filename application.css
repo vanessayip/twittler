@@ -9,13 +9,20 @@ button:hover {
   background-color: white;
 }
 
-#refresh:visited {
-  color: purple;
+button:focus {
+  outline: none;
 }
 
 h1 {
   font-family: 'Gotham';
   color: LightSkyBlue;
+}
+
+input[name="tweet"] {
+  width: 60%;
+  outline: none;
+  background-color: white;
+
 }
 
 .feed {
