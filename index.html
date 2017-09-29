@@ -14,6 +14,12 @@
     <nav>
     <button type="button" id="Refresh">Home</button>
     </nav>
+    <div>
+      <form id = "write-tweet">
+        <input type = "text" name="tweet" placeholder="What's happening?" maxlength="140">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
     <div class = "feed">
       <!--<div class = "tweet">
         <div class = "username"></div>
@@ -25,9 +31,22 @@
     <script>
 
       $(document).ready(function(){
+
+        $('#write-tweet').submit(function(event){
+          //var message = $('input:first').val();
+          // alert("hi!");
+          // alert(event.currentTarget.children[0].value);
+          window.visitor = 'caspurr';        
+          // visitor = 'tweetingVisitor';
+          // debugger
+          writeTweet(this.firstElementChild.value);
+          printAllTweets(null);
+          event.preventDefault();
+        });
        
         var printAllTweets = function (user){
           var tweetStream;
+          //debugger
 
           //if user is null, show all tweets
           if (user === null){
@@ -37,12 +56,10 @@
             tweetStream = streams.users[user];
           }
 
-          var tweetsLength = tweetStream.length - 1;
 
           $('.feed').empty();
 
-          while(tweetsLength >= 0){
-            var tweet = tweetStream[tweetsLength];
+          tweetStream.forEach(function(tweet){
             var $tweet = $('<div class = "tweet"></div>');
             var $tweetUsername = $('<span class = "username"></span>');
             var $tweetTimestamp = $('<span class = "timestamp"></span>');
@@ -53,8 +70,7 @@
             $tweetTimestamp.text('~' + moment(tweet.created_at).fromNow()).appendTo($tweet);
             $tweetMessage.text(tweet.message).appendTo($tweet);
             
-            tweetsLength -= 1;
-          }
+          });
 
           $('.username').on('click', function(event){
             $('.feed').empty();
